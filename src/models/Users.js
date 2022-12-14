@@ -1,6 +1,7 @@
 import {DataTypes, Sequelize } from 'sequelize';
 import {sequelize} from '../database/courses_db.js';
 import {Courses} from './Courses.js';
+import {UserCourse} from './users-courses.js';
 
 export const Users = sequelize.define('users',{
   id: {
@@ -27,17 +28,26 @@ export const Users = sequelize.define('users',{
       isEmail: true, 
     }
   },
-//   createdAt:{
-//     allowNull: false,
-//     type: DataTypes.DATE,
-//     field:'create_at',
-//     defaultValue:Sequelize.NOW
-//   },
+  password: {
+    type: DataTypes.STRING(64),
+    allowNull: false,
+    validate: {
+      //valida si contiene como mínimo: ocho caracteres, al menos una letra mayúscula, una letra minúscula y un número:
+      is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i
+      
+    }
+  },
+  adminRole:{
+    type:DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
 },
 {
   timestamps: true
 })
 
-Users.belongsToMany(Courses, {as:"User", foreignKey:'user_id',through: 'User_Courses' });
-Courses.belongsToMany(Users, {as:"Course", foreignKey:'course_id',through: 'User_Courses' });
+Users.belongsToMany(Courses, {as:"User", foreignKey:'user_id',through: UserCourse });
+Courses.belongsToMany(Users, {as:"Course", foreignKey:'course_id',through: UserCourse });
 sequelize.sync({alter:true}); //force:true
+

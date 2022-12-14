@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { followCourse, unfollowCourse,getCoursesFollowedByUSerId} from "../controllers/userCourses.controller.js";
+import {addCourse,getCoursesAddedByUserId} from "../controllers/userCourses.controller.js";
 
 
 
 const router = Router();
 
-router.get("/api/user_courses/:id",followCourse);
-router.get("/api/user_courses/:id",unfollowCourse);
-router.get("/api/user_courses/:id",getCoursesFollowedByUSerId);
+router.get("/api/users-added",getCoursesAddedByUserId);
+router.post("/api/ad-course",addCourse);
+
+
 
 export default router;
