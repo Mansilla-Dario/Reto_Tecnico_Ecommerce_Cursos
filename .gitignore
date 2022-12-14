@@ -8,3 +8,5 @@
 .sass-cache
 # Ignora todo los logs
 *.log
+# Ignora todo los módulos
+node_modules
