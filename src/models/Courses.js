@@ -5,12 +5,13 @@ export const Courses = sequelize.define('courses',{
   id: {
     type:DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   courseName:{
     type:DataTypes.STRING,
     notNull: true, 
-    unique: true
+    unique: true,
+    field: 'course_name',
   },
   
   summary:{

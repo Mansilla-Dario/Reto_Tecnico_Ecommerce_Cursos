@@ -11,8 +11,8 @@ export const getCourses = async (req, res) =>{
 
 export const createCourse = async (req, res) =>{
   try {
-    const {name, segmentId} = req.body;
-    const newCourse = await Courses.create({name,segmentId});
+    const {courseName, summary,authors_id} = req.body;
+    const newCourse = await Courses.create({courseName, summary,authors_id});
     res.json(newCourse);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -25,7 +25,7 @@ export const getCourse = async (req, res) =>{
     const course = await Courses.findByPk(id);
 
     if(!course){
-      return res.status(404).json({ message:'El Programa buscado no existe' });
+      return res.status(404).json({ message:'El Curso buscado no existe' });
     }
 
     res.json(course);

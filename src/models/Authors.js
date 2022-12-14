@@ -1,19 +1,23 @@
 import {DataTypes } from 'sequelize';
 import {sequelize} from '../database/courses_db.js';
+import {Courses} from './Courses.js';
 
 export const Authors = sequelize.define('authors',{
   id: {
+    allowNull: false,
     type:DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   firstName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    field: 'first_name',
   },
   lastName: {
-    type: DataTypes.STRING
-    // allowNull defaults to true
+    type: DataTypes.STRING,
+    field: 'last_name',
+    allowNull: false,
   },
   email: {
     type: DataTypes.TEXT,
@@ -35,5 +39,14 @@ export const Authors = sequelize.define('authors',{
 },
 {
   timestamps: true
-}
-)
+})
+
+Authors.hasMany(Courses,{
+  foreignKey: 'authors_id',
+  sourceKey:'id' 
+})
+
+Courses.belongsTo(Authors,{
+  foreignKey: 'authors_id',
+  targetId:'id' 
+})

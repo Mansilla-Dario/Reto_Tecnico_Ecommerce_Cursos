@@ -4,14 +4,13 @@ import { getCourses,createCourse, updateCourse, deleteCourse, getCourse } from "
 
 
 const router = Router();
-/*
 
-router.get("/courses",tokenVerifyHandler,getCourses);
-router.post("/courses",tokenVerifyHandler,createCourse);
+router.get("/api/courses",getCourses);
+router.post("/api/courses",createCourse);
 
-router.get("/courses/:id",tokenVerifyHandler,getCourse);
+router.get("/api/courses/:id",getCourse);
 
-router.put("/courses/:id",tokenVerifyHandler,updateCourse);
-router.delete("/courses/:id",tokenVerifyHandler,deleteCourse);
-*/
+router.put("/api/courses/:id",updateCourse);
+router.delete("/api/courses/:id",deleteCourse);
+
 export default router;
