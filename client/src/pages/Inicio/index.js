@@ -6,6 +6,8 @@ import axios from 'axios';
 
 function Inicio() {
   const [courses,setCourses] = React.useState(null)
+  
+ 
   const getCourses=async ()=>{
     try {
       const response = await axios.get('http://localhost:4000/api/courses');
@@ -16,57 +18,10 @@ function Inicio() {
       console.error(error);
     }
   }
-  const getAuthors=async ()=>{
-    try {
-      const response = await axios.get('http://localhost:4000/api/authors');
-      console.log("Autores ",response.data)
-      const auxAuthorsArray=  response.data;
-      
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  const getRatingCourse=async (courseID)=>{
-   // console.log("courseID: ", courseID)
-    try {
-      const response = await axios.post("http://localhost:4000/api/courses-rating",{  courseID:courseID } );
-      console.log("res esperada: ",response.data)
-     return response.data
-    } catch (error) {
-      console.error(error);
-    }
-  }
- const addRatingToArrayCourses=()=>{
-   if(!!courses){
-     const auxCourses=courses;
-     const arrayID=[];
-     auxCourses.map((obj,i)=>{
-       arrayID.push(getRatingCourse(obj.id))
-     })
-     console.log("arrayID", arrayID)
-     auxCourses.map((obj,i)=>{
-       auxCourses[i]={
-         ...auxCourses[i],
-         rating:4.5
-       }
-     })
-     setCourses(auxCourses)
-   }
- }
+  React.useEffect(()=>{
+  getCourses();
+  },[])
 
-React.useEffect(()=>{
- getCourses();
- getAuthors();
-},[])
-React.useEffect(()=>{
-  if(!!courses){
-    courses.map(obj=>{
-     getRatingCourse(obj.id)
-    })
-
-  }
-// getRatingCourse("4")
- },[courses])
   return (
     <>
     <div className="container col-sm-12">
@@ -82,18 +37,12 @@ React.useEffect(()=>{
                   img={"https://mdbcdn.b-cdn.net/img/new/standard/city/062.webp"}
                   title={obj.courseName}
                   desciption={obj.summary}
-                  autor={"Germancito"}
+                  autor={obj.authors_id}
                   followed={false}
                   rating={2.5}
                 />
             </div>
           ))}
-
-
-         
-        
-        
-        
         
       </div>
     </div>

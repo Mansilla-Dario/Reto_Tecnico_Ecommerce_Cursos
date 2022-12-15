@@ -35,7 +35,7 @@ export const getCoursesRatingByCourseId = async (req, res) =>{
     
     //armar el response
     const courseRating={
-      course,
+      ...course[0].dataValues,
       rating:average
     }
     //enviando response
@@ -45,7 +45,15 @@ export const getCoursesRatingByCourseId = async (req, res) =>{
   }
 }
 
-
+export const getAllCoursesRating = async (req, res) =>{
+  try {
+    const coursesAdded = await UserCourse.findAll();
+    
+    res.json(coursesAdded);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
 
 export const getCoursesAddedByUserId = async (req, res) =>{
   try {
