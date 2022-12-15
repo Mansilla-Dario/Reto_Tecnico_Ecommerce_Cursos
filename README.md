@@ -201,11 +201,12 @@ La propuesta se desarrolló a partir del STACK PERN, utilizando postgresql para 
 
 ## PENDIENTES
 No logré finalizar el 100% de lo que me hubiera gustado, por lo que dejo listado a continuacion algunos pendientes por realizar.
-- Cargar la imagen del thumbnail de cada curso a aws mediante s3 y guardar la url de cada imagen en ta tabla CURSOS para poder utilizarla y/o actualizarla.
+- Cargar la imagen del thumbnail de cada curso a aws mediante s3 y guardar la url de cada imagen en la tabla CURSOS para poder utilizarla y/o actualizarla.
 - El loging se forzó a true con la variable de estado "userActive" en app.js del cliente. Esta variable debería modificarse mediante el loging consultando hacia el backend y recibiendo un token para el inicio o mantenimiento de la sesión.
 - Existe una variable en la base de datos de cada usuario denominada "adminRole", esta se debería enviar en el token desde el backen para poder evaluar si el usuario debe o no tener acceso a la seccion de BackOffice.
 - Debería crear un loader ante la carga por peticiones al backend para que el usuario no se quede esperando sin conocer que sucede.
 - Debo utilizar los "try/catch" y ante errores de consulta al servidor ofrecerle una respuesta al usuario o derivarlo a una página de "error 500"
 - Me hubiera gustado subir la base de datos creada a un S3 o servicio remoto para hostear las tablas.
+- No alcancé a dockerizar la api.
 
 
