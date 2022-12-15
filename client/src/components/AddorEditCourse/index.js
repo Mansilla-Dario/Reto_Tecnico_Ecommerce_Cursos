@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import './editarCurso.css';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 function AddorEditCourse() {
   const navigate = useNavigate();
@@ -26,16 +27,11 @@ function AddorEditCourse() {
   }
   const updateCourse=async (id)=>{
     try {
-        
         const response = await axios.put(`http://localhost:4000/api/courses/${id}`,{
           courseName:newCourse.courseName,
           authors_id:newCourse.authors_id,
           summary:newCourse.summary,
         })
-     
-       console.log(response.data)
-      
-      
     } catch (error) {
       console.error(error);
     }
@@ -66,12 +62,16 @@ function AddorEditCourse() {
     setNewCourse(aux);
   }
   
-  const onHandleSubmit=(e)=>{
+  const onHandleSubmit=async(e)=>{
     e.preventDefault();
     if(!!params.id){
-      updateCourse(params.id)
+      await updateCourse(params.id)
+      swal("El curso ha sido actualizado!").then(navigate("/"))
+        
+      
     }else{
-      createNewCourses();
+      await createNewCourses();
+      swal("El curso ha sido creado!").then(navigate("/"))
     }
     }
   

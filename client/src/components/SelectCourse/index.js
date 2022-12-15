@@ -1,21 +1,45 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import swal from 'sweetalert';
 
 
 function SelectCourse(props) {
   const navigate = useNavigate();
   const [courses,setCourses] = React.useState(null)
+  const [btnName,setBtnName] = React.useState("")
   const [courseSelected,setCourseSelected] = React.useState(null)
-
+  const deleteCourseAction = async (id) => {
+    const response = await axios.delete(`http://localhost:4000/api/courses/${courseSelected}`);
+    }
   const deleteCourse=async ()=>{
     try {
-      const response = await axios.delete(`http://localhost:4000/api/courses/${courseSelected}`);
+      swal({
+        title: "Deseas Eliminar este curso?",
+        text: "Una vez lo elimines de la base de datos, no podrás recuperarlo nuevamente",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          deleteCourseAction();
+          swal("Poof! El Curso ha sido eliminado de la base de datos!", {
+            icon: "success",
+          });
+         
+        } else {
+          swal("EL curso aún sigue a salvo!");
+          return;
+        }
+      });
+     
       
     } catch (error) {
       console.error(error);
     }
   }
+ 
   const getCourses=async ()=>{
     try {
       const response = await axios.get('http://localhost:4000/api/courses');
@@ -30,11 +54,11 @@ function SelectCourse(props) {
     const aux=e.target.value;
     setCourseSelected(aux);
   }
-  const onHandleNavigate=()=>{
+  const onHandleNavigate=async ()=>{
     switch(props.motivo){
       case "remover":
         deleteCourse();
-        navigate(`/`)
+        
         break;
       case "editar":
         navigate(`/add-course/${courseSelected}`)
@@ -46,6 +70,16 @@ function SelectCourse(props) {
 
   React.useEffect(()=>{
     getCourses();
+    switch(props.motivo){
+      case "remover":
+        setBtnName("Eliminar")
+        break;
+      case "editar":
+        setBtnName("Editar")
+        break;
+      default:
+        break
+    }
    },[])
   return (
     <>
@@ -71,7 +105,7 @@ function SelectCourse(props) {
       </div>
       <div className="row d-flex justify-content-center align-items-center">
         <div className="col-md-6 mt-5 d-flex justify-content-center align-items-center">
-          <button className="btn btn-primary px-5 mx-0"  onClick={onHandleNavigate}>Siguiente</button>
+          <button className="btn btn-primary px-5 mx-0"  onClick={onHandleNavigate}>{btnName}</button>
         </div>
       </div>
       </div>
