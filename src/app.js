@@ -10,7 +10,7 @@ const app = express();
 
 
 
-//middlewares
+//Los middlewares irían aquí
 app.use(express.json());
 app.use(cors());
 

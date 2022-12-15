@@ -8,7 +8,7 @@ const router = Router();
 router.post("/api/ad-course",addCourse);
 router.get("/api/users-added",getCoursesAddedByUserId);
 router.delete("/api/users-added",deletCoursesAddedByUserId);
-router.get("/api/courses-rating",getCoursesRatingByCourseId);
+router.post("/api/courses-rating",getCoursesRatingByCourseId);
 
 
 

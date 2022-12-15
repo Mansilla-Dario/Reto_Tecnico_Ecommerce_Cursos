@@ -1,7 +1,7 @@
 import { Users } from "../models/Users.js";
 import { Courses } from "../models/Courses.js";
+import { Authors } from "../models/Authors.js";
 import { UserCourse } from "../models/users-courses.js";
-
 
 export const addCourse = async (req, res) =>{
   try {
@@ -17,6 +17,9 @@ export const getCoursesRatingByCourseId = async (req, res) =>{
   try {
     const { courseID } = req.body;
     const coursesAdded = await UserCourse.findAll({where:{courseID: courseID}});
+    //Obtener los datos del curso en cuestion
+    const course = await Courses.findAll({where:{id: courseID}});
+    //calcular el promedio
     let average=0;
     let ratingSum=0;
     let totalRatingSum=0;
@@ -29,11 +32,14 @@ export const getCoursesRatingByCourseId = async (req, res) =>{
     if(totalRatingSum!=0){
       average=ratingSum/totalRatingSum
     }
-    if(average==0){
-      return res.status(404).json({ message:'El curso no tiene puntuación promedio' });
+    
+    //armar el response
+    const courseRating={
+      course,
+      rating:average
     }
-
-    res.json(average);
+    //enviando response
+    res.json(courseRating);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
